@@ -1,5 +1,10 @@
 import { useState, useEffect } from 'react';
-import { Dialog } from '@/components/ui/dialog';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
 import { Slider } from '@/components/ui/slider';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -132,10 +137,10 @@ export default function LoanCalculator() {
         </div>
 
         <Dialog open={showBreakdown} onOpenChange={setShowBreakdown}>
-          <Dialog.Content className="sm:max-w-[900px]">
-            <Dialog.Header>
-              <Dialog.Title>Payment Breakdown</Dialog.Title>
-            </Dialog.Header>
+          <DialogContent className="sm:max-w-[900px]">
+            <DialogHeader>
+              <DialogTitle>Payment Breakdown</DialogTitle>
+            </DialogHeader>
             <div className="max-h-[60vh] overflow-auto">
               <table className="breakdown-table">
                 <thead>
@@ -158,7 +163,7 @@ export default function LoanCalculator() {
                 </tbody>
               </table>
             </div>
-          </Dialog.Content>
+          </DialogContent>
         </Dialog>
       </div>
     </div>
