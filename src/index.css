@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -6,72 +8,60 @@
   :root {
     --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
-
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
-
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
-
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
     --ring: 222.2 84% 4.9%;
-
     --radius: 0.5rem;
   }
 
-  .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
+  body {
+    font-family: 'Inter', sans-serif;
+    @apply bg-gray-50;
   }
 }
 
-@layer base {
-  * {
-    @apply border-border;
-  }
+.glass-card {
+  @apply bg-white/90 backdrop-blur-sm border border-gray-200 shadow-lg rounded-xl;
+}
 
-  body {
-    @apply bg-background text-foreground;
+.input-range {
+  @apply w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer;
+}
+
+.input-range::-webkit-slider-thumb {
+  @apply appearance-none w-6 h-6 bg-primary rounded-full shadow cursor-pointer transition-all hover:ring-4 hover:ring-primary/20;
+}
+
+.breakdown-table {
+  @apply w-full border-collapse;
+}
+
+.breakdown-table th {
+  @apply px-4 py-2 bg-gray-50 text-gray-600 font-medium text-sm;
+}
+
+.breakdown-table td {
+  @apply px-4 py-2 border-t border-gray-100 text-sm;
+}
+
+.highlight {
+  @apply font-semibold text-primary;
+}
+
+.result-card {
+  @apply animate-fade-in;
+}
+
+.modal-overlay {
+  @apply fixed inset-0 bg-black/50 backdrop-blur-sm z-50;
+}
+
+.modal-content {
+  @apply fixed inset-x-4 top-[50%] translate-y-[-50%] max-w-2xl mx-auto bg-white rounded-xl shadow-xl z-50 animate-slide-up;
+}
+
+@media (max-width: 640px) {
+  .modal-content {
+    @apply inset-x-4 max-h-[90vh] overflow-y-auto;
   }
 }
