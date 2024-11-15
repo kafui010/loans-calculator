@@ -123,7 +123,7 @@ export default function LoanCalculator() {
               </h2>
               <div className="space-y-4 text-lg">
                 <p className="text-gray-700 leading-relaxed">
-                  You can borrow up to <span className="highlight text-[#4B0082] font-semibold">{formatCurrency(loanAmount).replace('GH₵', '')}</span> with your stated net income of <span className="highlight text-[#4B0082] font-semibold">{formatCurrency(monthlySalary).replace('GH₵', '')}</span> a month, at an interest rate of <span className="highlight text-[#4B0082] font-semibold">{interestRate}%</span>.
+                  You can borrow up to GH₵ <span className="highlight text-[#4B0082] font-semibold">{formatCurrency(loanAmount).replace('GH₵', '')}</span> with your stated net income of <span className="highlight text-[#4B0082] font-semibold">{formatCurrency(monthlySalary).replace('GH₵', '')}</span> a month, at an interest rate of <span className="highlight text-[#4B0082] font-semibold">{interestRate}%</span>.
                 </p>
                 <p className="text-gray-700">
                   With these estimations, you would make payment installments of about <span className="highlight text-[#4B0082] font-semibold">{formatCurrency(monthlyPayment).replace('GH₵', '')}</span> monthly over <span className="highlight text-[#4B0082] font-semibold">{loanTenor}</span> months.
