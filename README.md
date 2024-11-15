@@ -1,4 +1,4 @@
-# Welcome to your Lovable project
+# Welcome to Loan Calculator project
 
 ## Project info
 
@@ -8,11 +8,6 @@
 
 There are several ways of editing your application.
 
-**Use Lovable**
-
-Simply visit the [Lovable Project](https://lovable.dev/projects/c6a0cb61-06c7-44b3-8d27-788541259545) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
 
 **Use your preferred IDE**
 
@@ -62,8 +57,7 @@ This project is built with .
 
 ## How can I deploy this project?
 
-Simply open [Lovable](https://lovable.dev/projects/c6a0cb61-06c7-44b3-8d27-788541259545) and click on Share -> Publish.
+Simply clone to your favorite IDE
 
 ## I want to use a custom domain - is that possible?
 
-We don't support custom domains (yet). If you want to deploy your project under your own domain then we recommend using Netlify. Visit our docs for more details: [Custom domains](https://docs.lovable.dev/tips-tricks/custom-domain/)
