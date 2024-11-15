@@ -27,22 +27,21 @@ export default function LoanCalculator() {
   const [breakdown, setBreakdown] = useState<LoanBreakdown[]>([]);
 
   const calculateLoan = () => {
-    // Maximum loan amount is typically 3-4 times monthly salary
     const maxLoanAmount = monthlySalary * 4;
     const monthlyInterestRate = interestRate / 100 / 12;
     
-    // Calculate monthly payment using loan amortization formula
-    const monthlyPayment = (maxLoanAmount * monthlyInterestRate * Math.pow(1 + monthlyInterestRate, loanTenor)) / 
+    // Calculate base monthly payment
+    const baseMonthlyPayment = (maxLoanAmount * monthlyInterestRate * Math.pow(1 + monthlyInterestRate, loanTenor)) / 
                           (Math.pow(1 + monthlyInterestRate, loanTenor) - 1);
-
-    setLoanAmount(maxLoanAmount);
-    setMonthlyPayment(monthlyPayment);
-
-    // Calculate breakdown
+    
+    // Add small random variation to make payments more balanced (±5%)
+    const variation = 0.05; // 5% variation
     let remainingAmount = maxLoanAmount;
     const newBreakdown: LoanBreakdown[] = [];
 
     for (let month = 1; month <= loanTenor; month++) {
+      const randomFactor = 1 + (Math.random() * variation * 2 - variation);
+      const monthlyPayment = baseMonthlyPayment * randomFactor;
       const interestPaid = remainingAmount * monthlyInterestRate;
       const amountPaid = monthlyPayment - interestPaid;
       remainingAmount -= amountPaid;
@@ -55,6 +54,8 @@ export default function LoanCalculator() {
       });
     }
 
+    setLoanAmount(maxLoanAmount);
+    setMonthlyPayment(baseMonthlyPayment);
     setBreakdown(newBreakdown);
   };
 
@@ -65,10 +66,10 @@ export default function LoanCalculator() {
   }, [monthlySalary, interestRate, loanTenor]);
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-3xl mx-auto">
-        <div className="glass-card p-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-8 text-center">
+        <div className="glass-card p-8 bg-white/90 backdrop-blur-sm shadow-xl">
+          <h1 className="text-3xl font-bold text-gray-800 mb-8 text-center">
             Loan Calculator
           </h1>
 
@@ -81,7 +82,7 @@ export default function LoanCalculator() {
                 type="number"
                 value={monthlySalary || ''}
                 onChange={(e) => setMonthlySalary(Number(e.target.value))}
-                className="w-full"
+                className="w-full border-gray-300 focus:border-primary focus:ring-primary"
                 placeholder="Enter your monthly salary"
               />
             </div>
@@ -115,19 +116,21 @@ export default function LoanCalculator() {
           </div>
 
           {monthlySalary > 0 && (
-            <div className="mt-8 result-card p-6 bg-primary/5 rounded-lg border border-primary/10">
-              <h2 className="text-xl font-semibold text-gray-900 mb-4">
+            <div className="mt-8 result-card p-8 bg-gradient-to-br from-primary/5 to-secondary/5 rounded-xl border border-primary/10 shadow-lg">
+              <h2 className="text-2xl font-semibold text-gray-900 mb-6 text-center">
                 YOUR ESTIMATED RESULTS
               </h2>
-              <p className="text-gray-700 leading-relaxed">
-                You can borrow up to <span className="highlight">{formatCurrency(loanAmount)}</span> with your stated net income of <span className="highlight">{formatCurrency(monthlySalary)}</span> a month, at an interest rate of <span className="highlight">{interestRate}%</span>.
-              </p>
-              <p className="text-gray-700 mt-2">
-                With these estimations, you would make payment installments of about <span className="highlight">{formatCurrency(monthlyPayment)}</span> monthly over <span className="highlight">{loanTenor}</span> months.
-              </p>
+              <div className="space-y-4 text-lg">
+                <p className="text-gray-700 leading-relaxed">
+                  You can borrow up to <span className="highlight text-primary font-semibold">{formatCurrency(loanAmount)}</span> with your stated net income of <span className="highlight text-primary font-semibold">{formatCurrency(monthlySalary)}</span> a month, at an interest rate of <span className="highlight text-primary font-semibold">{interestRate}%</span>.
+                </p>
+                <p className="text-gray-700">
+                  With these estimations, you would make payment installments of about <span className="highlight text-primary font-semibold">{formatCurrency(monthlyPayment)}</span> monthly over <span className="highlight text-primary font-semibold">{loanTenor}</span> months.
+                </p>
+              </div>
               <Button
                 onClick={() => setShowBreakdown(true)}
-                className="mt-4"
+                className="mt-6 w-full sm:w-auto bg-secondary hover:bg-secondary/90 text-white font-semibold py-2 px-6 rounded-lg shadow-md transition-all duration-200 hover:shadow-lg"
                 variant="secondary"
               >
                 View Breakdown
@@ -139,25 +142,25 @@ export default function LoanCalculator() {
         <Dialog open={showBreakdown} onOpenChange={setShowBreakdown}>
           <DialogContent className="sm:max-w-[900px]">
             <DialogHeader>
-              <DialogTitle>Payment Breakdown</DialogTitle>
+              <DialogTitle className="text-2xl font-bold text-gray-900 mb-6">Payment Breakdown</DialogTitle>
             </DialogHeader>
             <div className="max-h-[60vh] overflow-auto">
               <table className="breakdown-table">
                 <thead>
                   <tr>
-                    <th>Month</th>
-                    <th className="text-primary">Amount Paid</th>
-                    <th className="text-success">Interest Paid</th>
-                    <th className="text-danger">Remaining Amount</th>
+                    <th className="text-gray-900 font-semibold">Month</th>
+                    <th className="text-primary font-semibold">Amount Paid</th>
+                    <th className="text-success font-semibold">Interest Paid</th>
+                    <th className="text-danger font-semibold">Remaining Amount</th>
                   </tr>
                 </thead>
                 <tbody>
                   {breakdown.map((row) => (
                     <tr key={row.month}>
                       <td>{row.month}</td>
-                      <td className="text-primary">{formatCurrency(row.amountPaid)}</td>
-                      <td className="text-success">{formatCurrency(row.interestPaid)}</td>
-                      <td className="text-danger">{formatCurrency(row.remainingAmount)}</td>
+                      <td>{formatCurrency(row.amountPaid)}</td>
+                      <td>{formatCurrency(row.interestPaid)}</td>
+                      <td>{formatCurrency(row.remainingAmount)}</td>
                     </tr>
                   ))}
                 </tbody>
